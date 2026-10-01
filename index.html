@@ -1,0 +1,777 @@
+<!doctype html>
+<html lang="es">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>UT4 - Interacción con el navegador y objetos predefinidos</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Space+Grotesk:wght@400;500;700&family=IBM+Plex+Mono:wght@400;600&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="styles.css">
+</head>
+<body>
+  <div class="bg-shape bg-shape-a" aria-hidden="true"></div>
+  <div class="bg-shape bg-shape-b" aria-hidden="true"></div>
+
+  <header class="hero">
+    <p class="eyebrow">IES Germán Sánchez Ruipérez · CFGS DAW · Desarrollo Web en Entorno Cliente</p>
+    <h1>UNIDAD 04 - INTERACCIÓN CON EL NAVEGADOR Y OBJETOS PREDEFINIDOS</h1>
+  </header>
+
+  <main class="layout">
+    <aside class="toc" id="indice">
+      <h2>Contenido</h2>
+      <nav>
+        <a href="#s1">1. INTRODUCCIÓN</a>
+        <a href="#s2">2. UTILIZACIÓN DE OBJETOS. OBJETOS NATIVOS DEL LENGUAJE</a>
+        <a class="toc-sub" href="#s21">2.1 OBJETO MATH</a>
+        <a class="toc-sub" href="#s22">2.2 OBJETO DATE</a>
+        <a class="toc-sub" href="#s23">2.3 OTROS OBJETOS NATIVOS</a>
+        <a href="#s3">3. INTERACCIÓN CON EL NAVEGADOR. OBJETOS PREDEFINIDOS</a>
+        <a class="toc-sub" href="#s31">3.1 MÉTODOS BÁSICOS DEL OBJETO WINDOW PARA LA INTERACCIÓN CON EL USUARIO</a>
+        <a class="toc-sub" href="#s32">3.2 OBJETO CONSOLE</a>
+        <a href="#s4">4. GENERACIÓN DE TEXTO Y ELEMENTOS HTML DESDE CÓDIGO</a>
+        <a class="toc-sub" href="#s41">4.1 CONCEPTO DE CONTENIDO DINÁMICO</a>
+        <a class="toc-sub" href="#s42">4.2 USO DE DOCUMENT.WRITE()</a>
+        <a class="toc-sub" href="#s43">4.3 MODIFICACIÓN DEL CONTENIDO DEL DOCUMENTO</a>
+        <a class="toc-sub" href="#s44">4.4 GENERACIÓN DE CONTENIDO DINÁMICO CON ESTRUCTURAS DE CONTROL</a>
+        <a class="toc-sub" href="#s45">4.5 MOMENTO DE EJECUCIÓN DEL CÓDIGO (WINDOW.ONLOAD)</a>
+        <a class="toc-sub" href="#s46">4.6 BUENAS PRÁCTICAS INICIALES</a>
+        <a href="#s5">5. GESTIÓN DE LA APARIENCIA DE LA VENTANA</a>
+        <a class="toc-sub" href="#s51">5.1 PROPIEDADES DE LA VENTANA</a>
+        <a class="toc-sub" href="#s52">5.2 NAVEGACIÓN</a>
+        <a href="#s6">6. CREACIÓN DE NUEVAS VENTANAS Y COMUNICACIÓN</a>
+        <a class="toc-sub" href="#s61">6.1 APERTURA DE VENTANAS</a>
+        <a class="toc-sub" href="#s62">6.2 INTERACCIÓN CON LA VENTANA</a>
+        <a class="toc-sub" href="#s63">6.3 CONTROL DE LA VENTANA</a>
+        <a href="#s7">7. ALMACENAMIENTO Y RECUPERACIÓN DE INFORMACIÓN</a>
+        <a class="toc-sub" href="#s71">7.1 CONCEPTO DE ALMACENAMIENTO EN EL NAVEGADOR</a>
+        <a class="toc-sub" href="#s72">7.2 ALMACENAMIENTO CON LOCALSTORAGE</a>
+        <a class="toc-sub" href="#s722">7.2.2 OPERACIONES BÁSICAS</a>
+        <a class="toc-sub" href="#s723">7.2.3 USO CON VARIABLES DINÁMICAS</a>
+        <a class="toc-sub" href="#s724">7.2.4 USO CON OBJETOS</a>
+        <a class="toc-sub" href="#s73">7.3 ALMACENAMIENTO MEDIANTE COOKIES</a>
+        <a class="toc-sub" href="#s731">7.3.1 ESTRUCTURA DE UNA COOKIE</a>
+        <a class="toc-sub" href="#s732">7.3.2 CREAR UNA COOKIE</a>
+        <a class="toc-sub" href="#s735">7.3.5 ELIMINAR COOKIES</a>
+        <a class="toc-sub" href="#s74">7.4 COMPARACIÓN ENTRE LOCALSTORAGE Y COOKIES</a>
+        <a class="toc-sub" href="#s75">7.5 BUENAS PRÁCTICAS EN ALMACENAMIENTO</a>
+        <a href="#s8">8. ORGANIZACIÓN DEL CÓDIGO EN MÚLTIPLES ARCHIVOS</a>
+        <a class="toc-sub" href="#s81">8.1 PROBLEMA DEL CÓDIGO EN UN ÚNICO ARCHIVO</a>
+        <a class="toc-sub" href="#s82">8.2 CONCEPTO DE MODULARIZACIÓN</a>
+        <a class="toc-sub" href="#s83">8.3 USO DE MÓDULOS EN JAVASCRIPT (ES MODULES)</a>
+        <a class="toc-sub" href="#s832">8.3.2 EXPORTACIÓN AGRUPADA (FORMA ALTERNATIVA Y MÁS CLARA)</a>
+        <a class="toc-sub" href="#s833">8.3.3 EXPORTACIÓN POR DEFECTO (DEFAULT)</a>
+        <a class="toc-sub" href="#s84">8.4 CONFIGURACIÓN EN HTML</a>
+        <a class="toc-sub" href="#s85">8.5 SEPARACIÓN DE RESPONSABILIDADES</a>
+        <a class="toc-sub" href="#s86">8.6 REUTILIZACIÓN DEL CÓDIGO</a>
+        <a class="toc-sub" href="#s87">8.7 BUENAS PRÁCTICAS EN MODULARIZACIÓN</a>
+        <a href="#s9">9. DEPURACIÓN Y DOCUMENTACIÓN DEL CÓDIGO</a>
+        <a class="toc-sub" href="#s91">9.1 DEPURACIÓN DEL CÓDIGO</a>
+        <a class="toc-sub" href="#s911">9.1.1 USO DE CONSOLE.LOG()</a>
+        <a class="toc-sub" href="#s912">9.1.2 PRUEBAS CON DISTINTOS DATOS</a>
+        <a class="toc-sub" href="#s913">9.1.3 USO DE LAS HERRAMIENTAS DEL NAVEGADOR</a>
+        <a class="toc-sub" href="#s92">9.2 DOCUMENTACIÓN DEL CÓDIGO</a>
+        <a class="toc-sub" href="#s921">9.2.1 DOCUMENTACIÓN EN PROYECTOS MODULARES</a>
+        <a class="toc-sub" href="#s922">9.2.2 BUENAS PRÁCTICAS EN DOCUMENTACIÓN</a>
+        <a class="toc-sub" href="#s93">9.3 RELACIÓN ENTRE DEPURACIÓN Y DOCUMENTACIÓN</a>
+        <a href="#s10">10. CONCLUSIONES</a>
+        <a href="#s11">11. APLICACIÓN PRÁCTICA</a>
+      </nav>
+    </aside>
+
+    <article class="content">
+      <section id="s1" class="card">
+        <h2>1. INTRODUCCIÓN</h2>
+        <p>En las unidades anteriores, el alumnado ha aprendido a programar utilizando <strong>estructuras de control, funciones, arrays y objetos</strong>, desarrollando programas que se ejecutaban principalmente en consola. Sin embargo, en el desarrollo web real, el código se ejecuta dentro de un entorno concreto: <strong>el navegador</strong>.</p>
+        <p>En esta unidad se introduce el uso del navegador como entorno de ejecución, permitiendo al alumnado <strong>interactuar con el usuario, gestionar información y modificar el comportamiento de la aplicación en tiempo real</strong>.</p>
+        <p>Para ello, se trabajará con los <strong>objetos predefinidos del lenguaje y del navegador</strong>, que proporcionan funcionalidades listas para usar. Además, se introduce un aspecto clave en el desarrollo profesional: la <strong>organización del código en múltiples archivos mediante módulos</strong>, favoreciendo la reutilización y el mantenimiento del código.</p>
+        <p>Esta unidad supone un cambio importante, ya que el alumnado comienza a desarrollar aplicaciones <strong>más cercanas a la realidad</strong>, donde el código no solo resuelve problemas, sino que <strong>interactúa con el entorno y con el usuario</strong>.</p>
+      </section>
+      <section id="s2" class="card">
+        <h2>2. UTILIZACIÓN DE OBJETOS. OBJETOS NATIVOS DEL LENGUAJE</h2>
+        <p>JavaScript dispone de una serie de <strong>objetos nativos</strong> que permiten realizar operaciones comunes sin necesidad de implementarlas desde cero. Estos objetos forman parte del lenguaje y facilitan el desarrollo de programas más eficientes.</p>
+      </section>
+      <section id="s21" class="card">
+        <h3>2.1 OBJETO MATH</h3>
+        <p>El objeto <strong>Math</strong> proporciona métodos para realizar operaciones matemáticas.</p>
+        <p>Ejemplo:</p>
+        <pre><code>let numero = 4.7;
+console.log(Math.round(numero));  
+console.log(Math.floor(numero));  
+console.log(Math.ceil(numero));   
+console.log(Math.random());       </code></pre>
+        <p>También permite generar números aleatorios en un rango:</p>
+        <pre><code>let aleatorio = Math.floor(Math.random() * 10) + 1;</code></pre>
+        <p>Muy útil en:</p>
+        <ul>
+        <li>juegos </li>
+        <li>simulaciones </li>
+        <li>generación de datos</li>
+        </ul>
+      </section>
+      <section id="s22" class="card">
+        <h3>2.2 OBJETO DATE</h3>
+        <p>El objeto <strong>Date</strong> permite trabajar con fechas y horas.</p>
+        <pre><code>let fecha = new Date();
+console.log(fecha.getFullYear());
+console.log(fecha.getMonth());
+console.log(fecha.getDate());</code></pre>
+        <p>Permite:</p>
+        <ul>
+        <li>obtener la fecha actual </li>
+        <li>trabajar con tiempos </li>
+        <li>mostrar información temporal </li>
+        </ul>
+      </section>
+      <section id="s23" class="card">
+        <h3>2.3 OTROS OBJETOS NATIVOS</h3>
+        <ul>
+        <li><strong>String</strong> → manipulación de texto </li>
+        <li><strong>Number</strong> → conversión de valores</li>
+        <li><strong>Boolean</strong> → para trabajar con valores booleanos</li>
+        </ul>
+        <p>Ejemplo:</p>
+        <pre><code>let texto = &quot;hola mundo&quot;;
+console.log(texto.toUpperCase());
+let numero = Number(&quot;10&quot;);</code></pre>
+        <p>El uso de objetos nativos:</p>
+        <ul>
+        <li>evita duplicar código </li>
+        <li>facilita la reutilización </li>
+        <li>mejora la eficiencia </li>
+        </ul>
+        <p>Además, de estos objetos existen muchos más, que iremos descubriendo a medida que vayamos desarrollando nuestros proyectos con JavaScript.</p>
+      </section>
+      <section id="s3" class="card">
+        <h2>3. INTERACCIÓN CON EL NAVEGADOR. OBJETOS PREDEFINIDOS</h2>
+        <p>El navegador proporciona objetos que permiten interactuar con el entorno. El principal es el objeto <strong>window</strong>, que representa la ventana del navegador.</p>
+      </section>
+      <section id="s31" class="card">
+        <h3>3.1 MÉTODOS BÁSICOS DEL OBJETO WINDOW PARA LA INTERACCIÓN CON EL USUARIO</h3>
+        <pre><code>let nombre = prompt(&quot;Introduce tu nombre&quot;);
+let continuar = confirm(&quot;¿Quieres continuar?&quot;);
+if (continuar) {
+alert(&quot;Bienvenido &quot; + nombre);
+} else {
+alert(&quot;Operación cancelada&quot;);
+}</code></pre>
+        <p>Estos objetos nos permiten:</p>
+        <ul>
+        <li>mostrar información </li>
+        <li>solicitar datos </li>
+        <li>controlar decisiones del usuario </li>
+        </ul>
+      </section>
+      <section id="s32" class="card">
+        <h3>3.2 OBJETO CONSOLE</h3>
+        <pre><code>console.log(&quot;Mensaje&quot;);
+console.error(&quot;Error&quot;);
+console.warn(&quot;Advertencia&quot;);</code></pre>
+        <p>Este objeto con el que ya hemos trabajado es fundamental para:</p>
+        <ul>
+        <li>depuración </li>
+        <li>seguimiento del programa </li>
+        </ul>
+      </section>
+      <section id="s4" class="card">
+        <h2>4. GENERACIÓN DE TEXTO Y ELEMENTOS HTML DESDE CÓDIGO</h2>
+        <p>Uno de los aspectos fundamentales del desarrollo web es la capacidad de generar contenido de forma dinámica. A diferencia de una página estática, donde el contenido está definido previamente en el archivo HTML, JavaScript permite <strong>crear, modificar y mostrar información en tiempo real</strong>.</p>
+        <p>Este apartado introduce al alumnado en la idea de que el código puede influir directamente en lo que el usuario ve en pantalla, sentando las bases para el trabajo posterior con el <strong>DOM</strong> en unidades siguientes.</p>
+      </section>
+      <section id="s41" class="card">
+        <h3>4.1 CONCEPTO DE CONTENIDO DINÁMICO</h3>
+        <p>El contenido dinámico es aquel que <strong>no está definido previamente en el HTML</strong>, sino que se genera o modifica mediante código.</p>
+        <p>Por ejemplo:</p>
+        <ul>
+        <li>Mostrar un mensaje personalizado </li>
+        <li>Mostrar resultados de un cálculo </li>
+        <li>Crear elementos en función de datos </li>
+        </ul>
+        <p>Ejemplo:</p>
+        <pre><code>let nombre = prompt(&quot;Introduce tu nombre&quot;);
+document.write(&quot;Hola &quot; + nombre);</code></pre>
+        <p>En este caso, el contenido que se muestra depende del usuario, por lo que no es estático.</p>
+      </section>
+      <section id="s42" class="card">
+        <h3>4.2 USO DE DOCUMENT.WRITE()</h3>
+        <p>El método <strong>document.write</strong><strong>()</strong> permite escribir directamente en el documento HTML desde JavaScript.</p>
+        <pre><code>document.write(&quot;Hola mundo&quot;);</code></pre>
+        <p>También permite incluir etiquetas HTML:</p>
+        <pre><code>document.write(&quot;&lt;h1&gt;Título&lt;/h1&gt;&quot;);
+document.write(&quot;&lt;p&gt;Este es un párrafo&lt;/p&gt;&quot;);</code></pre>
+        <p><strong>Principales c</strong><strong>aracterísticas</strong></p>
+        <ul>
+        <li>Es <strong>simple y directo</strong> </li>
+        <li>Se ejecuta en el momento de carga de la página </li>
+        <li>Inserta contenido en el documento </li>
+        </ul>
+        <p><strong>L</strong><strong>imitaciones importantes</strong></p>
+        <p>Aunque es útil para aprender, presenta inconvenientes:</p>
+        <ul>
+        <li><strong>Sobrescribe el documento</strong> si se ejecuta después de la carga </li>
+        <li>No permite modificar contenido existente </li>
+        <li>No se utiliza en aplicaciones reales </li>
+        </ul>
+        <p><strong>Ejemplo problemático:</strong></p>
+        <pre><code>document.write(&quot;Nuevo contenido&quot;); // Borra todo lo anterior si se ejecuta tarde</code></pre>
+      </section>
+      <section id="s43" class="card">
+        <h3>4.3 MODIFICACIÓN DEL CONTENIDO DEL DOCUMENTO</h3>
+        <p>Para superar las limitaciones de document.write(), se pueden utilizar propiedades del documento como <strong>innerHTML</strong>.</p>
+        <pre><code>document.body.innerHTML = &quot;&lt;h1&gt;Bienvenido&lt;/h1&gt;&quot;;</code></pre>
+        <p>Esto permite <strong>modificar el contenido existente</strong> de la página.</p>
+        <p><strong>Qué permite hacer</strong></p>
+        <ul>
+        <li>Cambiar contenido </li>
+        <li>Insertar HTML </li>
+        <li>Mostrar resultados dinámicos </li>
+        </ul>
+        <p><strong>Ejemplo</strong></p>
+        <pre><code>let numero = Number(prompt(&quot;Introduce un número&quot;));
+let doble = numero * 2;
+
+document.body.innerHTML = &quot;&lt;p&gt;El doble es: &quot; + doble + &quot;&lt;/p&gt;&quot;;</code></pre>
+        <p>El contenido mostrado depende del cálculo.</p>
+        <p><strong>Consideraciones</strong></p>
+        <ul>
+        <li>Reemplaza <strong>todo el contenido del </strong><strong>body</strong> </li>
+        <li>Puede eliminar contenido previo si no se usa correctamente </li>
+        </ul>
+      </section>
+      <section id="s44" class="card">
+        <h3>4.4 GENERACIÓN DE CONTENIDO DINÁMICO CON ESTRUCTURAS DE CONTROL</h3>
+        <p>JavaScript permite generar contenido en función de condiciones o repeticiones.</p>
+        <p><strong>Uso con condicionales</strong></p>
+        <pre><code>let edad = Number(prompt(&quot;Edad&quot;));
+
+if (edad &gt;= 18) {
+    document.write(&quot;&lt;p&gt;Mayor de edad&lt;/p&gt;&quot;);
+} else {
+    document.write(&quot;&lt;p&gt;Menor de edad&lt;/p&gt;&quot;);
+}</code></pre>
+        <p><strong>Uso con bucles</strong></p>
+        <pre><code>let numeros = [1, 2, 3, 4];
+
+for (let i = 0; i &lt; numeros.length; i++) {
+    document.write(&quot;&lt;li&gt;&quot; + numeros[i] + &quot;&lt;/li&gt;&quot;);
+}</code></pre>
+        <pre><code>let nombres = [&quot;Ana&quot;, &quot;Luis&quot;, &quot;Pedro&quot;];
+
+document.write(&quot;&lt;ul&gt;&quot;);
+
+for (let i = 0; i &lt; nombres.length; i++) {
+    document.write(&quot;&lt;li&gt;&quot; + nombres[i] + &quot;&lt;/li&gt;&quot;);
+}
+
+document.write(&quot;&lt;/ul&gt;&quot;);</code></pre>
+      </section>
+      <section id="s45" class="card">
+        <h3>4.5 MOMENTO DE EJECUCIÓN DEL CÓDIGO (WINDOW.ONLOAD)</h3>
+        <p>Cuando trabajamos con JavaScript en una página web, es importante entender que el código puede ejecutarse <strong>antes de que el HTML esté completamente cargado</strong>.</p>
+        <p>Esto puede provocar errores cuando se intenta acceder a elementos como document.body o elementos del documento.</p>
+        <p><strong>Problema habitual</strong></p>
+        <pre><code>document.body.innerHTML = &quot;&lt;h1&gt;Hola&lt;/h1&gt;&quot;;</code></pre>
+        <p>Este código puede fallar si el &lt;body&gt; aún no existe en el momento de ejecución.</p>
+        <p><strong>Solución: </strong><strong>window.onload</strong></p>
+        <p>Para asegurarnos de que el documento está completamente cargado, se utiliza:</p>
+        <pre><code>window.onload = function() {
+    document.body.innerHTML = &quot;&lt;h1&gt;Hola&lt;/h1&gt;&quot;;
+};</code></pre>
+        <p>De esta manera, se espera a que la página se cargue completamente para ejecutar el código después, garantizando que los elementos HTML existen.</p>
+        <p><strong>Ejemplo </strong></p>
+        <pre><code>window.onload = function() {
+    let numero = Number(prompt(&quot;Introduce un número&quot;));
+    let doble = numero * 2;
+
+    document.body.innerHTML = &quot;&lt;p&gt;El doble es: &quot; + doble + &quot;&lt;/p&gt;&quot;;
+};</code></pre>
+      </section>
+      <section id="s46" class="card">
+        <h3>4.6 BUENAS PRÁCTICAS INICIALES</h3>
+        <p>En este nivel es importante introducir ciertas recomendaciones:</p>
+        <ul>
+        <li>Evitar abusar de <strong>document.write</strong><strong>()</strong> ya que esta deprecado.</li>
+        <li>Usar <strong>innerHTML</strong> de forma controlada </li>
+        <li>Asegurar la carga del documento (window.onload) </li>
+        <li>Separar lógica y presentación en la medida de lo posible </li>
+        <li>Mantener el código organizado</li>
+        </ul>
+      </section>
+      <section id="s5" class="card">
+        <h2>5. GESTIÓN DE LA APARIENCIA DE LA VENTANA</h2>
+        <p>El objeto <strong>window</strong> permite acceder a información relacionada con la ventana del navegador y modificar su comportamiento. Esto resulta especialmente útil para adaptar la aplicación al entorno en el que se ejecuta.</p>
+      </section>
+      <section id="s51" class="card">
+        <h3>5.1 PROPIEDADES DE LA VENTANA</h3>
+        <p>El navegador proporciona información sobre el tamaño de la ventana:</p>
+        <pre><code>console.log(window.innerWidth);
+console.log(window.innerHeight);</code></pre>
+        <p>Estas propiedades indican:</p>
+        <ul>
+        <li>Ancho de la ventana </li>
+        <li>Alto de la ventana </li>
+        </ul>
+        <p><strong>Aplicaciones prácticas</strong></p>
+        <ul>
+        <li>Adaptar contenido según tamaño de pantalla </li>
+        <li>Mostrar información contextual al usuario </li>
+        <li>Simular comportamiento responsive </li>
+        </ul>
+        <pre><code>if (window.innerWidth &lt; 600) {
+    document.write(&quot;Pantalla pequeña&quot;);
+} else {
+    document.write(&quot;Pantalla grande&quot;);
+}</code></pre>
+      </section>
+      <section id="s52" class="card">
+        <h3>5.2 NAVEGACIÓN</h3>
+        <p>El método <strong>location</strong> permite obtener información sobre la URL actual y modificarla.</p>
+        <pre><code>console.log(window.location.href);</code></pre>
+        <p><strong>Redirección</strong></p>
+        <pre><code>window.location.href = &quot;https://www.google.com&quot;;</code></pre>
+        <p><strong>Recarga de página</strong></p>
+        <pre><code>window.location.reload();</code></pre>
+      </section>
+      <section id="s6" class="card">
+        <h2>6. CREACIÓN DE NUEVAS VENTANAS Y COMUNICACIÓN</h2>
+        <p>El navegador permite abrir nuevas ventanas o pestañas mediante código.</p>
+      </section>
+      <section id="s61" class="card">
+        <h3>6.1 APERTURA DE VENTANAS</h3>
+        <pre><code>let nuevaVentana = window.open(&quot;https://www.example.com&quot;, &quot;_blank&quot;);</code></pre>
+        <p>Parámetros:</p>
+        <ul>
+        <li>URL </li>
+        <li>tipo de apertura (_blank, _self) </li>
+        </ul>
+      </section>
+      <section id="s62" class="card">
+        <h3>6.2 INTERACCIÓN CON LA VENTANA</h3>
+        <pre><code>let nuevaVentana = window.open(&quot;https://www.example.com&quot;, &quot;_blank&quot;);</code></pre>
+        <pre><code>nuevaVentana.document.write(&quot;Contenido en nueva ventana&quot;);</code></pre>
+      </section>
+      <section id="s63" class="card">
+        <h3>6.3 CONTROL DE LA VENTANA</h3>
+        <pre><code>let nuevaVentana = window.open(&quot;https://www.example.com&quot;, &quot;_blank&quot;);</code></pre>
+        <pre><code>nuevaVentana.document.write(&quot;Contenido en nueva ventana&quot;);</code></pre>
+        <pre><code>nuevaVentana.close();</code></pre>
+        <p><strong>Ejemplo práctico</strong></p>
+        <pre><code>let ventana = window.open(&quot;&quot;, &quot;_blank&quot;);
+ventana.document.write(&quot;&lt;h1&gt;Hola desde otra ventana&lt;/h1&gt;&quot;);</code></pre>
+        <p>Aunque no es muy usado en aplicaciones modernas, nos permite trabajar:</p>
+        <ul>
+        <li>Comprender el funcionamiento del navegador </li>
+        <li>Referencias a objetos </li>
+        <li>Comunicación entre contextos </li>
+        <li>Conceptos de aplicaciones multi-ventana </li>
+        </ul>
+      </section>
+      <section id="s7" class="card">
+        <h2>7. ALMACENAMIENTO Y RECUPERACIÓN DE INFORMACIÓN</h2>
+        <p>En el desarrollo de aplicaciones web, es habitual necesitar guardar información para poder utilizarla más adelante. Esta información puede estar relacionada con el usuario, con la configuración de la aplicación o con datos generados durante la ejecución.</p>
+        <p>El navegador proporciona diferentes mecanismos para almacenar información en el lado del cliente, permitiendo que los datos se mantengan incluso después de cerrar la página o el navegador.</p>
+        <p>En esta unidad se trabajan principalmente:</p>
+        <ul>
+        <li><strong>localStorage</strong> </li>
+        <li><strong>cookies</strong> </li>
+        </ul>
+      </section>
+      <section id="s71" class="card">
+        <h3>7.1 CONCEPTO DE ALMACENAMIENTO EN EL NAVEGADOR</h3>
+        <p>El almacenamiento en el navegador permite guardar información de forma persistente en el dispositivo del usuario.</p>
+        <p>Esto permite:</p>
+        <ul>
+        <li>mantener datos entre sesiones </li>
+        <li>evitar pedir continuamente la misma información </li>
+        <li>mejorar la experiencia de usuario </li>
+        </ul>
+        <p>Ejemplos de uso:</p>
+        <ul>
+        <li>guardar el nombre de usuario </li>
+        <li>recordar preferencias (tema oscuro, idioma…) </li>
+        </ul>
+      </section>
+      <section id="s72" class="card">
+        <h3>7.2 ALMACENAMIENTO CON LOCALSTORAGE</h3>
+        <p>El objeto <strong>localStorage</strong> permite almacenar datos de forma persistente en el navegador mediante pares <strong>clave-valor</strong>.</p>
+        <h4><strong>7</strong><strong>.2.1 Características de </strong><strong>localStorage</strong></h4>
+        <ul>
+        <li><strong>Persistente</strong> → no se borra al cerrar el navegador </li>
+        <li><strong>Formato clave-valor</strong> </li>
+        <li><strong>Solo almacena texto</strong> </li>
+        <li><strong>Gran capacidad</strong> (comparado con cookies) </li>
+        <li><strong>Fácil de usar</strong> </li>
+        </ul>
+      </section>
+      <section id="s722" class="card">
+        <h4>7.2.2 OPERACIONES BÁSICAS</h4>
+        <p><strong>Guardar datos</strong></p>
+        <pre><code>localStorage.setItem(&quot;nombre&quot;, &quot;Ana&quot;);</code></pre>
+        <p><strong>Recuperar datos</strong></p>
+        <pre><code>let nombre = localStorage.getItem(&quot;nombre&quot;);
+console.log(nombre);</code></pre>
+        <p><strong>Eliminar datos</strong></p>
+        <pre><code>localStorage.removeItem(&quot;nombre&quot;);</code></pre>
+        <p><strong>Eliminar todo</strong></p>
+        <pre><code>localStorage.clear();</code></pre>
+      </section>
+      <section id="s723" class="card">
+        <h4>7.2.3 USO CON VARIABLES DINÁMICAS</h4>
+        <pre><code>let nombre = prompt(&quot;Introduce tu nombre&quot;);
+localStorage.setItem(&quot;usuario&quot;, nombre);</code></pre>
+      </section>
+      <section id="s724" class="card">
+        <h4>7.2.4 USO CON OBJETOS</h4>
+        <p>Como localStorage solo almacena texto, es necesario convertir los objetos a formato JSON.</p>
+        <p><strong>Guardar objeto</strong></p>
+        <pre><code>let usuario = {
+    nombre: &quot;Ana&quot;,
+    edad: 20
+};
+
+localStorage.setItem(&quot;usuario&quot;, JSON.stringify(usuario));</code></pre>
+        <p><strong>Recuperar objeto</strong></p>
+        <pre><code>let datos = JSON.parse(localStorage.getItem(&quot;usuario&quot;));
+console.log(datos.nombre);</code></pre>
+      </section>
+      <section id="s73" class="card">
+        <h3>7.3 ALMACENAMIENTO MEDIANTE COOKIES</h3>
+        <p>Las <strong>cookies</strong> son un mecanismo tradicional de almacenamiento que permite guardar información en el navegador en forma de texto.</p>
+        <ul>
+        <li>Se almacenan como <strong>cadenas de texto</strong> </li>
+        <li>Tienen una <strong>fecha de expiración</strong> </li>
+        <li>Se envían automáticamente al servidor </li>
+        <li>Tienen <strong>menor capacidad</strong> que localStorage </li>
+        </ul>
+      </section>
+      <section id="s731" class="card">
+        <h4>7.3.1 ESTRUCTURA DE UNA COOKIE</h4>
+        <p>nombre=valor; expires=fecha</p>
+      </section>
+      <section id="s732" class="card">
+        <h4>7.3.2 CREAR UNA COOKIE</h4>
+        <p>document.cookie = &quot;usuario=Ana&quot;;</p>
+        <h4><strong>7.3.</strong><strong>3</strong><strong> Cookie con expiración</strong></h4>
+        <pre><code>let fecha = new Date();
+fecha.setTime(fecha.getTime() + (24 * 60 * 60 * 1000));
+document.cookie = &quot;usuario=Ana; expires=&quot; + fecha.toUTCString();</code></pre>
+        <h4><strong>7.3.</strong><strong>4</strong><strong> Leer cookies</strong></h4>
+        <pre><code>console.log(document.cookie);</code></pre>
+        <p><strong>Resultado:</strong></p>
+        <blockquote><p>usuario=Ana; tema=oscuro</p></blockquote>
+      </section>
+      <section id="s735" class="card">
+        <h4>7.3.5 ELIMINAR COOKIES</h4>
+        <pre><code>document.cookie = &quot;usuario=; expires=Thu, 01 Jan 1970 00:00:00 UTC&quot;;</code></pre>
+        <p><strong>Limitaciones de las cookies</strong></p>
+        <ul>
+        <li>Más complejas de gestionar </li>
+        <li>Menor capacidad </li>
+        <li>Se envían en cada petición (puede afectar al rendimiento) </li>
+        </ul>
+      </section>
+      <section id="s74" class="card">
+        <h3>7.4 COMPARACIÓN ENTRE LOCALSTORAGE Y COOKIES</h3>
+        <p><strong>Interpretación</strong></p>
+        <ul>
+        <li><strong>localStorage</strong> → ideal para aplicaciones cliente </li>
+        <li><strong>cookies</strong> → útiles cuando se necesita comunicación con servidor </li>
+        </ul>
+      </section>
+      <section id="s75" class="card">
+        <h3>7.5 BUENAS PRÁCTICAS EN ALMACENAMIENTO</h3>
+        <p>En este nivel es importante introducir hábitos correctos:</p>
+        <ul>
+        <li>Usar nombres claros para las claves </li>
+        <li>Evitar almacenar información sensible </li>
+        <li>Comprobar si los datos existen antes de usarlos </li>
+        <li>No abusar del almacenamiento </li>
+        </ul>
+        <p><strong>Ejemplo</strong><strong>s</strong></p>
+        <pre><code>let usuario = localStorage.getItem(&quot;usuario&quot;);
+
+if (usuario) {
+    console.log(&quot;Usuario encontrado:&quot;, usuario);
+} else {
+    console.log(&quot;No hay usuario guardado&quot;);
+}</code></pre>
+        <pre><code>// Pedir nombre
+let nombre = prompt(&quot;Introduce tu nombre&quot;);
+
+// Guardar en localStorage
+localStorage.setItem(&quot;usuario&quot;, nombre);
+
+// Guardar en cookie
+document.cookie = &quot;usuario=&quot; + nombre;
+
+// Mostrar resultados
+console.log(&quot;localStorage:&quot;, localStorage.getItem(&quot;usuario&quot;));
+console.log(&quot;Cookies:&quot;, document.cookie);</code></pre>
+      </section>
+      <section id="s8" class="card">
+        <h2>8. ORGANIZACIÓN DEL CÓDIGO EN MÚLTIPLES ARCHIVOS</h2>
+        <p>A medida que los programas crecen en tamaño y complejidad, resulta necesario organizar el código de forma adecuada. En unidades anteriores, el código se ha desarrollado en un único archivo, lo que es válido en programas pequeños, pero se convierte en un problema en aplicaciones más grandes.</p>
+        <p>En esta unidad se introduce la <strong>modularización</strong><strong> del código</strong>, es decir, la división del programa en diferentes archivos, cada uno con una responsabilidad concreta. Este enfoque permite desarrollar aplicaciones más <strong>claras, reutilizables y mantenibles</strong>, y es el utilizado en el desarrollo profesional.</p>
+      </section>
+      <section id="s81" class="card">
+        <h3>8.1 PROBLEMA DEL CÓDIGO EN UN ÚNICO ARCHIVO</h3>
+        <p>Cuando todo el código se encuentra en un solo fichero:</p>
+        <ul>
+        <li>Se vuelve <strong>difícil de leer</strong> </li>
+        <li>Es complicado de mantener </li>
+        <li>Se incrementa la probabilidad de errores </li>
+        <li>Se dificulta la reutilización </li>
+        </ul>
+        <p><strong>Ejemplo de mala práctica:</strong></p>
+        <pre><code>// Archivo con muchas funciones mezcladas
+function sumar(a, b) { return a + b; }
+function guardar() { ... }
+function mostrar() { ... }</code></pre>
+        <p>Si el código crece, es necesario <strong>organizarlo correctamente</strong></p>
+      </section>
+      <section id="s82" class="card">
+        <h3>8.2 CONCEPTO DE MODULARIZACIÓN</h3>
+        <p>La modularización consiste en dividir el código en <strong>módulos</strong>, es decir, archivos independientes que contienen funcionalidades específicas.</p>
+        <p>Cada módulo debe tener una <strong>única responsabilidad</strong>, por ejemplo:</p>
+        <ul>
+        <li>funciones matemáticas </li>
+        <li>gestión de almacenamiento </li>
+        <li>lógica principal </li>
+        </ul>
+        <p><strong>Ejemplo de estructura</strong></p>
+        <p>proyecto/<br>│<br>├ index.html<br>├ js/<br>│   ├ app.js<br>│   ├ funciones.js<br>│   ├ storage.js<br>│<br>└── css/</p>
+        <p>La modularización ofrece múltiples ventajas, entre las que se pueden destacar:</p>
+        <ul>
+        <li>Mejora la <strong>organización del código</strong> </li>
+        <li>Facilita la <strong>reutilización</strong> </li>
+        <li>Permite trabajar en equipo </li>
+        <li>Reduce la duplicación </li>
+        <li>Hace el código más <strong>profesional</strong> </li>
+        </ul>
+      </section>
+      <section id="s83" class="card">
+        <h3>8.3 USO DE MÓDULOS EN JAVASCRIPT (ES MODULES)</h3>
+        <p>JavaScript permite dividir el código en diferentes archivos mediante el uso de módulos. Para ello, se utilizan las palabras clave <strong>export</strong> e <strong>import</strong>, que permiten compartir código entre archivos.</p>
+        <h4><strong>8.3.1 Exportación nombrada (forma recomendada)</strong></h4>
+        <p>La exportación nombrada permite exportar varias funciones o variables desde un mismo archivo.</p>
+        <p><strong>Forma básica</strong></p>
+        <pre><code>// funciones.js
+export function sumar(a, b) {
+    return a + b;
+}
+
+export function restar(a, b) {
+    return a - b;
+}</code></pre>
+        <p>Cada elemento se exporta de forma individual.</p>
+        <p><strong>Importación</strong></p>
+        <pre><code>// app.js
+import { sumar, restar } from &quot;./funciones.js&quot;;
+
+console.log(sumar(2, 3));</code></pre>
+        <p>Es obligatorio usar <strong>llaves {}</strong> porque se trata de exportaciones nombradas. Permitiendo exportar varios elementos, para importarlos por su nombre exacto. </p>
+      </section>
+      <section id="s832" class="card">
+        <h4>8.3.2 EXPORTACIÓN AGRUPADA (FORMA ALTERNATIVA Y MÁS CLARA)</h4>
+        <p>Otra forma más estructurada es definir las funciones primero y exportarlas al final:</p>
+        <pre><code>// funciones.js
+function sumar(a, b) {
+    return a + b;
+}
+
+function restar(a, b) {
+    return a - b;
+}
+
+export { sumar, restar };</code></pre>
+      </section>
+      <section id="s833" class="card">
+        <h4>8.3.3 EXPORTACIÓN POR DEFECTO (DEFAULT)</h4>
+        <p>Cuando un archivo tiene un único elemento principal, se puede usar <strong>exportación por defecto</strong>.</p>
+        <p><strong>Ejemplo</strong></p>
+        <pre><code>// saludo.js
+export default function saludar(nombre) {
+    return &quot;Hola &quot; + nombre;
+}</code></pre>
+        <p><strong>Importación</strong></p>
+        <pre><code>import saludar from &quot;./saludo.js&quot;;</code></pre>
+        <p><strong>Diferencias clave</strong></p>
+      </section>
+      <section id="s84" class="card">
+        <h3>8.4 CONFIGURACIÓN EN HTML</h3>
+        <p>Para que los módulos funcionen correctamente, es necesario indicar en el HTML que el script es de tipo módulo:</p>
+        <pre><code>&lt;script type=&quot;module&quot; src=&quot;js/app.js&quot;&gt;&lt;/script&gt;</code></pre>
+        <p><strong>Características de los módulos</strong></p>
+        <ul>
+        <li>Cada archivo tiene su propio ámbito </li>
+        <li>No contaminan el espacio global </li>
+        <li>Permiten importar y exportar código </li>
+        </ul>
+        <p>Los módulos requieren un servidor para funcionar correctamente, esto significa que no funcionan con: file://. Por tanto, necesitaremos alojarlos en un servidor web o simular un servidor con <strong>Live Server (Visual Studio Code)</strong> </p>
+      </section>
+      <section id="s85" class="card">
+        <h3>8.5 SEPARACIÓN DE RESPONSABILIDADES</h3>
+        <p>Una de las ideas clave en la modularización es que cada archivo debe encargarse de una tarea concreta.</p>
+        <p><strong>Ejemplo</strong></p>
+        <pre><code>//funciones.js</code></pre>
+        <pre><code>export function doble(n) {
+    return n * 2;
+}</code></pre>
+        <pre><code>//storage.js</code></pre>
+        <pre><code>export function guardar(nombre) {
+    localStorage.setItem(&quot;usuario&quot;, nombre);
+}</code></pre>
+        <pre><code>//app.js</code></pre>
+        <pre><code>import { doble } from &quot;./funciones.js&quot;;
+import { guardar } from &quot;./storage.js&quot;;
+
+let numero = 5;
+console.log(doble(numero));
+
+guardar(&quot;Ana&quot;);</code></pre>
+        <p><strong>¿Qué hemos logrado?</strong></p>
+        <ul>
+        <li>Evitar funciones que hacen demasiadas cosas </li>
+        <li>Mejorar la claridad del programa </li>
+        <li>Facilitar el mantenimiento </li>
+        </ul>
+      </section>
+      <section id="s86" class="card">
+        <h3>8.6 REUTILIZACIÓN DEL CÓDIGO</h3>
+        <p>Una de las grandes ventajas de los módulos es la posibilidad de reutilizar código. Por ejemplo, una función definida en un archivo puede utilizarse en múltiples proyectos.</p>
+        <p><strong>Ejemplo</strong></p>
+        <pre><code>// funciones reutilizables
+export function esPar(n) {
+    return n % 2 === 0;
+}</code></pre>
+      </section>
+      <section id="s87" class="card">
+        <h3>8.7 BUENAS PRÁCTICAS EN MODULARIZACIÓN</h3>
+        <p>Es importante introducir ciertas normas:</p>
+        <ul>
+        <li>Usar nombres claros para los archivos </li>
+        <li>Agrupar funcionalidades relacionadas </li>
+        <li>Evitar archivos demasiado grandes </li>
+        <li>Importar solo lo necesario </li>
+        <li>Mantener estructura coherente </li>
+        </ul>
+      </section>
+      <section id="s9" class="card">
+        <h2>9. DEPURACIÓN Y DOCUMENTACIÓN DEL CÓDIGO</h2>
+        <p>El desarrollo de software no consiste únicamente en escribir código que funcione, sino también en asegurarse de que ese código es correcto, comprensible y fácil de mantener. Para ello, es fundamental trabajar dos aspectos clave:</p>
+        <ul>
+        <li><strong>La depuración del código</strong> </li>
+        <li><strong>La documentación del código</strong> </li>
+        </ul>
+        <p>Ambos elementos forman parte del proceso de desarrollo profesional y permiten mejorar la calidad de los programas.</p>
+      </section>
+      <section id="s91" class="card">
+        <h3>9.1 DEPURACIÓN DEL CÓDIGO</h3>
+        <p>La <strong>depuración</strong> es el proceso de identificar, analizar y corregir errores en un programa. Durante el desarrollo es habitual cometer errores, por lo que es necesario utilizar herramientas y técnicas que permitan detectarlos y solucionarlos.</p>
+      </section>
+      <section id="s911" class="card">
+        <h4>9.1.1 USO DE CONSOLE.LOG()</h4>
+        <p>La herramienta más utilizada en este nivel es <strong>console.log(</strong><strong>)</strong>, que permite mostrar información en la consola del navegador, a medida que usemos JavaScript para desarrollar aplicaciones webs profesionales, dejaremos esta herramienta para tareas de depuración relacionadas como:</p>
+        <ul>
+        <li>comprobar valores de variables </li>
+        <li>verificar resultados </li>
+        <li>entender el flujo del programa </li>
+        </ul>
+      </section>
+      <section id="s912" class="card">
+        <h4>9.1.2 PRUEBAS CON DISTINTOS DATOS</h4>
+        <p>Para comprobar que un programa funciona correctamente, es necesario probarlo con diferentes tipos de datos.</p>
+        <p><strong>Ejemplo</strong></p>
+        <pre><code>let numero = Number(prompt(&quot;Introduce un número&quot;));
+console.log(numero * 2);</code></pre>
+        <p>Sería necesario probar con:</p>
+        <ul>
+        <li>números positivos </li>
+        <li>números negativos </li>
+        <li>cero </li>
+        <li>texto </li>
+        </ul>
+      </section>
+      <section id="s913" class="card">
+        <h4>9.1.3 USO DE LAS HERRAMIENTAS DEL NAVEGADOR</h4>
+        <p>El navegador proporciona herramientas de desarrollo accesibles mediante, <strong>F12 o botón derecho → Inspeccionar</strong><strong>,</strong> estas herramientas  nos permiten:</p>
+        <ul>
+        <li>ver la consola </li>
+        <li>analizar errores </li>
+        <li>inspeccionar código </li>
+        </ul>
+      </section>
+      <section id="s92" class="card">
+        <h3>9.2 DOCUMENTACIÓN DEL CÓDIGO</h3>
+        <p>La <strong>documentación del código</strong> consiste en añadir información explicativa dentro del programa para facilitar su comprensión.</p>
+      </section>
+      <section id="s921" class="card">
+        <h4>9.2.1 DOCUMENTACIÓN EN PROYECTOS MODULARES</h4>
+        <p>Cuando se trabaja con varios archivos, la documentación cobra mayor importancia.</p>
+        <p><strong>Ejemplo</strong></p>
+        <pre><code>// funciones.js
+/*
+Funciones matemáticas básicas
+*/
+export function sumar(a, b) {
+    return a + b;
+}</code></pre>
+        <p>Las principales ventajas de documentar los módulos son:</p>
+        <ul>
+        <li>Facilita el trabajo en equipo </li>
+        <li>Permite entender el código sin analizarlo completamente </li>
+        <li>Mejora el mantenimiento </li>
+        </ul>
+      </section>
+      <section id="s922" class="card">
+        <h3>9.2.2 BUENAS PRÁCTICAS EN DOCUMENTACIÓN</h3>
+        <ul>
+        <li>Escribir comentarios claros y concisos </li>
+        <li>Evitar comentarios innecesarios </li>
+        <li>Mantener la documentación actualizada </li>
+        <li>Documentar especialmente funciones y módulos </li>
+        </ul>
+      </section>
+      <section id="s93" class="card">
+        <h3>9.3 RELACIÓN ENTRE DEPURACIÓN Y DOCUMENTACIÓN</h3>
+        <p>Ambos procesos están estrechamente relacionados:</p>
+        <ul>
+        <li>la <strong>depuración</strong> permite corregir errores </li>
+        <li>la <strong>documentación</strong> permite entender el código </li>
+        </ul>
+        <p>En definitiva, un código bien documentado es más fácil de depurar.</p>
+      </section>
+      <section id="s10" class="card">
+        <h2>10. CONCLUSIONES</h2>
+        <p>En esta unidad el alumnado ha dado un paso fundamental en su proceso de aprendizaje, pasando de la programación estructurada desarrollada en unidades anteriores a la interacción con un entorno real de ejecución: <strong>el navegador web</strong>.</p>
+        <p>A lo largo de la unidad, se ha trabajado con los <strong>objetos nativos del lenguaje</strong>, que permiten simplificar el desarrollo mediante el uso de funcionalidades ya implementadas, favoreciendo la eficiencia y la reutilización del código. Asimismo, se han introducido los <strong>objetos predefinidos del navegador</strong>, especialmente el objeto window, que permite establecer una primera interacción con el usuario y comprender cómo el código puede influir en el entorno.</p>
+        <p>Uno de los aspectos más relevantes ha sido la introducción del concepto de <strong>contenido dinámico</strong>, permitiendo al alumnado generar y modificar información en la página web. Este punto resulta clave, ya que establece las bases para el trabajo posterior con el <strong>DOM</strong>, donde la manipulación del documento se realizará de forma más estructurada y profesional.</p>
+        <p>Además, se ha abordado la <strong>gestión de la ventana del navegador</strong> y la creación de nuevas ventanas, lo que ha permitido comprender mejor el funcionamiento del entorno cliente y la relación entre distintos contextos de ejecución.</p>
+        <p>Otro bloque fundamental ha sido el almacenamiento de información en el navegador, mediante el uso de <strong>localStorage</strong><strong> y cookies</strong>, introduciendo el concepto de <strong>persistencia de datos</strong>. Este aprendizaje acerca al alumnado a situaciones reales en las que es necesario mantener información entre sesiones, mejorando la experiencia de usuario.</p>
+        <p>Especial relevancia tiene la introducción de la <strong>organización del código en múltiples archivos mediante módulos</strong>, ya que supone un cambio hacia prácticas propias del desarrollo profesional. El alumnado ha aprendido a estructurar aplicaciones, separar responsabilidades y reutilizar código, aspectos esenciales en proyectos reales y en el uso de frameworks modernos.</p>
+        <p>Por último, se han trabajado las técnicas de <strong>depuración y documentación del código</strong>, fundamentales para garantizar la calidad del software. El uso de herramientas como la consola del navegador y la incorporación de comentarios adecuados permiten desarrollar programas más fiables, comprensibles y mantenibles.</p>
+      </section>
+      <section id="s11" class="card">
+        <h2>11. APLICACIÓN PRÁCTICA</h2>
+        <p>Ahora es el momento de aplicar los conceptos mediante <strong>ejercicios prácticos</strong>.</p>
+        <p>Comenzaremos con los <strong>ejercicios guiados</strong>, que te permitirán practicar los contenidos de la unidad siguiendo ejemplos y orientaciones paso a paso. Después, podrás realizar los <strong>ejercicios individuales</strong> de manera autónoma, aplicando lo aprendido sobre la interacción con el navegador, el almacenamiento y la organización del código.</p>
+        <p>Antes de comenzar, recuerda utilizar el <strong>fichero CSS proporcionado</strong>, enlazándolo desde el documento HTML para mantener una presentación homogénea en todas las actividades.</p>
+
+        <h3><strong>Recursos</strong></h3>
+        <ul>
+          <li>📘 <strong><a href="Recursos%20UT/UT4%20-%20Ejercicios%20guiados.pdf" target="_blank" rel="noopener noreferrer">Ejercicios guiados de UT4</a></strong></li>
+          <li>💻 <strong><a href="Recursos%20UT/UT4%20-%20Ejercicios.pdf" target="_blank" rel="noopener noreferrer">Ejercicios individuales de UT4</a></strong></li>
+          <li>📄 <strong><a href="Recursos%20UT/estilo-ejercicios.css" target="_blank" rel="noopener noreferrer">Descargar estilo-ejercicios.css</a></strong></li>
+        </ul>
+      </section>
+    </article>
+  </main>
+
+  <footer class="footer">
+    <p>IES Germán Sánchez Ruipérez · CFGS DAW · Desarrollo Web en Entorno Cliente · Curso 2025-26</p>
+  </footer>
+
+  <script src="script.js"></script>
+</body>
+</html>
